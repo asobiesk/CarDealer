@@ -1,11 +1,10 @@
-package komis;
+package Komis;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.paint.Color;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -34,6 +33,10 @@ public class Controller {
     private KomisDAO DAO = null;
     private int operation = 0; //[1]Insert [2]Update [3]Delete
 
+    /**
+     * Metoda wywoływana domyślnie przy starcie aplikacji.
+     * Ustawia listenery wydarzeń oraz wywołuje metody average i count
+     */
     @FXML
     private void initialize() {
         try {
@@ -71,6 +74,10 @@ public class Controller {
         }
     }
 
+    /**
+     * Obsługa ChocieBoxa wyboru typu operacji
+     * @param choice Wybór z zakresu 1-3
+     */
     private void operationEvent(int choice) {
         operation = choice + 1;
         if (choice == 1 || choice == 2) { //UPDATE lub DELETE
@@ -91,6 +98,10 @@ public class Controller {
             btnApply.setDisable(false);
     }
 
+    /**
+     * Obsługa ChoiceBoxa wyboru tabeli do zmodyfikowania
+     * @param choice Wybór
+     */
     private void modifyEvent(int choice) {
         switch (choice) {
             case 0:
@@ -140,6 +151,10 @@ public class Controller {
 
     }
 
+    /**
+     * Obsługa choiceboxa wyboru tabeli do wyświetlenia
+     * @param choice Wybór
+     */
     private void selectEvent(int choice) {
         StringBuffer results = DAO.select(choice);
         if (results == null) {
@@ -153,6 +168,9 @@ public class Controller {
 
     }
 
+    /**
+     * Obłsługa kliknięcia w przycisk "Zastosuj"
+     */
     @FXML
     private void btnApply_clicked() {
         int operation = boxOperation.getSelectionModel().getSelectedIndex();
@@ -190,12 +208,18 @@ public class Controller {
 
     }
 
+    /**
+     * Obsliczenie i wyświetlenie średniej ceny samochodu
+     */
     private void average()
     {
         int average = DAO.average();
         txtMedium.setText(Integer.toString(average));
     }
 
+    /**
+     * Obliczenie i wyświetlenie liczby samochodów w komisie
+     */
     private void count()
     {
         int sum = DAO.count();
@@ -204,7 +228,16 @@ public class Controller {
 
     }
 
-
+    /**
+     * Pomocnicza funkcja ustawiająca dostępność TextFieldów
+     * do wpisywania wartości pól w tabelach
+     * @param a  Czy pierwsze pole ma być dostępne? (true/false)
+     * @param b jw
+     * @param c jw
+     * @param d jw
+     * @param e jw
+     * @param f jw
+     */
     private void textDisable(boolean a, boolean b, boolean c, boolean d, boolean e, boolean f) {
         txt1.setEditable(!a);
         txt1.clear();

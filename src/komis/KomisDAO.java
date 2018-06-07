@@ -1,9 +1,12 @@
-﻿package komis;
+package Komis;
 
 import oracle.jdbc.pool.OracleDataSource;
 
 import java.sql.*;
 
+/**
+ * Obsługa komunikacji z bazą danych
+ */
 public class KomisDAO {
     private static final String user = "****";
     private static final String password = "****";
@@ -11,6 +14,10 @@ public class KomisDAO {
 
     private Connection conn = null;
 
+    /**
+     * Połączenie z bazą danych
+     * @throws SQLException
+     */
     public void connect() throws SQLException {
         try {
             System.out.println("Wszedłem do connecta!");
@@ -27,6 +34,11 @@ public class KomisDAO {
         }
     }
 
+    /**
+     * Wczytywanie danych z bazy
+     * @param option Numer tabeli, z której pobrane są dane
+     * @return Wszystkie dane z tabeli spakowane i wyrównane
+     */
     public StringBuffer select(int option) {
         try {
             Statement statement = conn.createStatement();
@@ -91,6 +103,12 @@ public class KomisDAO {
         }
     }
 
+    /**
+     * Wstawianie nowych wierszy do tabel
+     * @param table Numer tabeli
+     * @param parameters Tablica parametrów do wstawienia
+     * @return Powodzenie operacji
+     */
     public boolean insertHandler(int table, String[] parameters) {
         try {
             PreparedStatement ps = null;
@@ -147,6 +165,12 @@ public class KomisDAO {
         }
     }
 
+    /**
+     * Aktualizacja danych w tabelach
+     * @param table Numer tabeli
+     * @param parameters Tablica danych do nadpisania we wierszu
+     * @return Powodzenie operacji
+     */
     public boolean updateHandler(int table, String[] parameters) {
         try {
             if (parameters[0] == null)
@@ -270,6 +294,12 @@ public class KomisDAO {
         }
     }
 
+    /**
+     * Usuwanie wiersza z tabeli
+     * @param table Numer tabeli
+     * @param parameters Zestaw danych to identyfikacji wiersza
+     * @return Powodzenie operacji
+     */
     public boolean deleteHandler(int table, String[] parameters) {
         try {
             PreparedStatement ps = null;
@@ -314,6 +344,10 @@ public class KomisDAO {
         }
     }
 
+    /**
+     * Obliczanie średniej ceny w tabeli Samochód
+     * @return Srednia cena
+     */
     public int average() {
         try {
             Statement statement = conn.createStatement();
@@ -329,6 +363,10 @@ public class KomisDAO {
 
     }
 
+    /**
+     * ZLiczanie samochodów w tabeli
+     * @return Liczba samochodów
+     */
     public int count()
     {
         try {
